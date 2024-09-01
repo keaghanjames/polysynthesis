@@ -2,9 +2,9 @@ library(ordinalNet)
 library(ivreg)
 library(nloptr)
 
-setwd("~/Dropbox/Lindell/Polysynthesis/plotting language trees")
+setwd("") # you will need to set the appropriate path
 load("bestmodel")
-updated <- read.csv('~/Dropbox/Lindell/Polysynthesis/languoid_data_for_analysis.csv')
+updated <- read.csv('language_data_for_analysis.csv')
 
 #use the below lines to switch between the Polysynthetic (poly_definite) and Extended (pol_borderline) lists
 #data$poly <- updated$poly_definite
@@ -27,6 +27,8 @@ data$poly_Central_America <- data$poly*data$Central_America
 data$poly_Australia_and_New_Zealand <- data$poly*data$Australia_and_New_Zealand
 
 
+y <- data$EGIDS_tr
+levels(y2)[1:6] <- "6a"
 
 #test if polysynthesis has explanatory power to endangerment levels beyond the best model for endangerment levels by refitting
 #Bromham et al. 2022's best model with poly and its interaction terms as additional variables
@@ -40,8 +42,13 @@ autoord.lasso <- function (y,X,W) {
         ordinalNetCV(X1,y,nFolds=10,alpha=0.5,standardize=F,family="cumulative",link="probit",nonparallelTerms=F,tuneMethod="cvLoglik",maxiterOut=1000)
 }
 
+#we define our outcome variables
+y <- data$EGIDS_tr
+levels(y2)[1:6] <- "6a" #and we also collapse the first six levels into a single level to be consistent with Bromham et al. 2022. 
+
+#we extract our predictors
 X <- data[,c(model,colnames(data)[2808:2820])] #model is the best model for language endangerment from Bromham et al. 2022.
-#this extracts those variables and the additional iteraction variables from the dataframe
+#this extracts those variables and the additional interaction variables from the data frame
 
 X <- X[,which(colnames(X) != 'island')] #we drop the variable island as we aren't testing it here
 
