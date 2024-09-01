@@ -1,33 +1,20 @@
 #The code defines the function autoord() that takes six arguments: a, y, X, Wsp, Wphy, and Wnb. 
+#It also implements the polysynthesis analysis using the Polysynthetic and Extended list
 
 #   - a is a numeric vector with length 2 that is used to compute the weights for the variables in the model.
 #   - y is a numeric vector of the response variable.
 #   - X is a numeric matrix of predictors.
-#   - Wsp, Wphy, and Wnb are numeric matrices that represent the weights for each predictor.
-
-#The purpose of this function is to perform ordinal regression on the data using the ordinalNet() 
-#function.
+#   - Wsp, Wphy, and Wnb are numeric matrices that represent the spacial, phylogenetic and contact distances between languages.
 
 #The optim() function is then used to optimize the parameters a for the autoord() function. 
 #The optim() function takes the initial values for a as well as the autoord() function itself and other optimization parameters as inputs, and returns the optimal values of a. These optimal values are then used as inputs to the autoord() function.
 
-#Overall, this block of code appears to be fitting an ordinal regression model to some data using 
-#the ordinalNet() function, and then optimizing some parameters using the optim() function.
 
-# The function begins by subsetting X and y to exclude rows with missing values. 
-# It then uses the values of a, Wsp, Wphy, and Wnb to compute the weights W. 
-# The weights are used to calculate Wy, which is a weighted sum of y.tmp.
-# 
-# Next, X2 is calculated as the weighted sum of X.tmp, and X.tmp and X2 are combined 
-# into a single matrix X1 along with Wy and the residuals of a linear model of Wy on X2. 
-# Finally, ordinalNet() is called on X1 and y.tmp. ordinalNet() appears to be a function 
-# that performs ordinal regression using a probit link function.
-
-setwd('~/Dropbox/Lindell/Polysynthesis/For_Xia/')
+setwd('') #you will need to set the path
 #lets load in those covariance matrices 
-load('~/Dropbox/Lindell/Polysynthesis/For_Xia/Wphy.Rdata')
-load('~/Dropbox/Lindell/Polysynthesis/For_Xia/Wsp.Rdata')
-load('~/Dropbox/Lindell/Polysynthesis/For_Xia/Wnb.Rdata')
+load('Wphy.Rdata')
+load('Wsp.Rdata')
+load('Wnb.Rdata')
 
 
 #now we read in our data
